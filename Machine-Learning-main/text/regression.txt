@@ -1,0 +1,36 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+df=pd.read_csv('Temperatures.csv')
+
+x=df['YEAR']
+y=df['ANNUAL']
+
+plt.figure(figsize=(8,4.5))
+plt.title('Temperature')
+plt.xlabel('Year')
+plt.ylabel('Average Temperature')
+plt.scatter(x,y)
+
+from sklearn.linear_model import LinearRegression
+x = x.values
+x = x.reshape(117,1)
+regressor = LinearRegression()
+regressor.fit(x,y)
+
+regressor.coef_
+regressor.intercept_
+regressor.predict([[2024]])
+predicted = regressor.predict(x)
+predicted
+
+import sklearn.metrics as sk
+sk.mean_absolute_error(y,predicted)
+sk.mean_squared_error(y,predicted)
+sk.r2_score(y,predicted)
+
+plt.title('Temperature plot')
+plt.xlabel('Year')
+plt.ylabel('Average Temperature')
+plt.scatter(x,y, label= ' Actual', color = 'y')
+plt.plot(x, predicted, label = 'predicted' , color = 'r')
+plt.legend()
